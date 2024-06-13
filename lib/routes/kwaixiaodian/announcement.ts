@@ -19,7 +19,7 @@ export const route: Route = {
     path: '/announcement/:cateId?',
     categories: ['programming'],
     example: '/kwaixiaodian/announcement',
-    parameters: { categoryId: '公告分类, 可在页面URL获取' },
+    parameters: { cateId: '公告分类, 可在页面URL获取' },
     features: {
         requireConfig: false,
         requirePuppeteer: false,
