@@ -1,8 +1,7 @@
 import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import dayjs from 'dayjs';
-import timezone from '@/utils/timezone';
+import { parseDate } from '@/utils/parse-date';
 
 const typeMap = {
     '1': '业务动态',
@@ -29,7 +28,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '平台公告',
-    maintainers: ['zhijunchai'],
+    maintainers: ['blade0910'],
     handler,
     description: `| 类型       | type       |
   | ---------- | ---------- |
@@ -41,7 +40,7 @@ export const route: Route = {
 };
 
 async function handler(ctx) {
-    const cateId = ctx.req.param('cateId') ? ctx.req.param('cateId') : 'all';
+    const cateId = ctx.req.param('cateId') || 'all';
     const url = `https://open.kwaixiaodian.com/rest/open/platform/doc/page/list?docType=1&location=0&docCatalogId=${cateId === 'all' ? '' : cateId}&pageNum=1&pageSize=10`;
     const response = await got({ method: 'get', url });
 
@@ -49,7 +48,7 @@ async function handler(ctx) {
         title: item.docPageName,
         pageSign: item.pageSign,
         link: `https://open.kwaixiaodian.com/zone/new/announcement/detail?cateId=${cateId}&pageSign=${item.pageSign}`,
-        pubDate: timezone(dayjs(item.updateTime).format('YYYY-MM-DD HH:mm:ss'), +8),
+        pubDate: parseDate(item.updateTime),
     }));
 
     const result = await Promise.all(

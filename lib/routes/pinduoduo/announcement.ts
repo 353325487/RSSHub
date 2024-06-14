@@ -30,7 +30,7 @@ export const route: Route = {
         supportScihub: false,
     },
     name: '平台公告',
-    maintainers: ['zhijunchai'],
+    maintainers: ['blade0910'],
     handler,
     description: `| 类型       | type       |
   | ---------- | ---------- |
